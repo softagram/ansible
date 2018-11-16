@@ -227,11 +227,13 @@ SCALEWAY_TRANSITIONS_STATES = (
 
 def check_image_id(compute_api, image_id):
     response = compute_api.get(path="images")
-
     if response.ok:
-        for image in response.json["images"]:
-            if image["id"] == image_id:
-                return
+        try:
+            for image in response.json["images"]:
+                if image["id"] == image_id:
+                    return
+        except KeyError:
+            compute_api.module.fail_json(msg="Error in getting images from: %s" % response.json)
     compute_api.module.fail_json(msg='Error in getting image %s on %s' % (image_id, compute_api.module.params.get('api_url')))
 
 
