@@ -57,7 +57,7 @@
 - name: Create an image from VM (check mode)
   azure_rm_image:
       resource_group: "{{ resource_group }}"
-      source: "{{ vm.azure_vm.properties.storageProfile.osDisk.managedDisk.id }}"
+      source: "{{ vm.ansible_facts.azure_vm.properties.storageProfile.osDisk.managedDisk.id }}"
       name: testimage001
       os_type: Linux
   check_mode: yes
@@ -84,7 +84,7 @@
 - name: Create an image from VM (idempotent)
   azure_rm_image:
       resource_group: "{{ resource_group }}"
-      source: "{{ vm.azure_vm.properties.storageProfile.osDisk.managedDisk.id }}"
+      source: "{{ vm.ansible_facts.azure_vm.properties.storageProfile.osDisk.managedDisk.id }}"
       name: testimage001
       os_type: Linux
   register: output
